@@ -1,0 +1,1 @@
+- Zamiana paginacji na komponent
