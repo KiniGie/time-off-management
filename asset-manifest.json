@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/time-off-request-management/static/css/main.813f0826.css",
+    "main.js": "/time-off-request-management/static/js/main.34ffdf8b.js",
+    "index.html": "/time-off-request-management/index.html",
+    "main.813f0826.css.map": "/time-off-request-management/static/css/main.813f0826.css.map",
+    "main.34ffdf8b.js.map": "/time-off-request-management/static/js/main.34ffdf8b.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.813f0826.css",
+    "static/js/main.34ffdf8b.js"
+  ]
+}
