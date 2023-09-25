@@ -1,39 +1,37 @@
 import React from "react";
-import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import PanelPage from "./pages/PanelPage";
 import LoginPage from "./pages/LoginPage";
-import Navigation from "./components/Navigation";
+import Layout from "./components/Layout";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: (
-      <div>
-        <Navigation/>
-        <Outlet />
-      </div>
-    ),
-    children: [
-      {
-        path: "/",
-        element: <HomePage />,
-      },
-      {
-        path: "panel",
-        element: <PanelPage />,
-      },
-    ],
-  },
+const router = createBrowserRouter(
+	[
+		{
+			path: "/",
+			element: <Layout />,
+			children: [
+				{
+					path: "/",
+					element: <HomePage />,
+				},
+				{
+					path: "panel",
+					element: <PanelPage /> /* TODO: POZMIENIAC NAZWY! */,
+				},
+			],
+		},
 
-  {
-    path: "login",
-    element: <LoginPage />,
-  },
-]);
+		{
+			path: "login",
+			element: <LoginPage />,
+		},
+	],
+	{ basename: "/time-off-management" }
+);
 
 const Router = ({ children }) => {
-  return <RouterProvider router={router}>{children}</RouterProvider>;
+	return <RouterProvider router={router}>{children}</RouterProvider>;
 };
 
 export default Router;

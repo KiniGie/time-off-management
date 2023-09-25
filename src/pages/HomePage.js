@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Context } from "../store/ContextProvider";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -10,6 +10,7 @@ import "swiper/css/pagination";
 import "./HomePage.css";
 
 const HomePage = () => {
+	// homepage jest komponentem i f.strzalkowa
 	const [opinions, setOpinions] = useState([]);
 	const [opinion, setOpinion] = useState("");
 	const [isInputFocus, setIsInputFocus] = useState(false);
@@ -20,13 +21,14 @@ const HomePage = () => {
 		if (!isLogged) {
 			navigate("/login");
 		}
-	}, []);
+	}, []); //useEffect wykonuje sie na pcozatku i w momencie zmiany zaleznosci podanych w []
 
 	if (!isLogged) {
-		return null;
+		return null; // null zeby strona nie mignela
 	}
 
 	const handleAddOpinion = () => {
+		//f.strzalkowa, zero argumentowa
 		if (!opinion) {
 			return;
 		}
@@ -36,8 +38,9 @@ const HomePage = () => {
 			person: "Jan Skoczny",
 			text: opinion,
 		};
-
+		console.log("dodaje");
 		setOpinions([newOpinion, ...opinions]);
+		setOpinion("");
 	};
 
 	return (
@@ -47,23 +50,14 @@ const HomePage = () => {
 					<Swiper pagination={{ clickable: true }} modules={[Pagination]}>
 						<SwiperSlide>
 							<img
-								src='https://img.freepik.com/darmowe-zdjecie/rendering-3d-spotkanie-biznesowe-i-pokoj-pracy-na-budynku-biurowym_105762-1972.jpg?w=2000&t=st=1689935736~exp=1689936336~hmac=51b6ac9371fddad0254664d8bf6e1042358e4985af04a80082aa47c88e5c733a'
+								src='https://img.freepik.com/premium-zdjecie/fioletowa-inspiracja-wnetrza-przestrzeni-roboczej_828688-1950.jpg?size=626&ext=jpg&ga=GA1.1.1922413231.1689935713&semt=ais'
 								className='office-pic'
 							/>
 						</SwiperSlide>
-
 						<SwiperSlide>
 							<img
-								src='https://img.freepik.com/premium-zdjecie/multiracial-nowoczesny-zespol-biznesowy-rozwijajacy-strategie-firmy-w-biurze_52137-6803.jpg?size=626&ext=jpg&ga=GA1.1.1922413231.1689935713&semt=sph'
+								src='https://img.freepik.com/premium-zdjecie/nowoczesne-wnetrze-salonu-loft_33739-262.jpg?w=1800'
 								alt='office-2'
-								className='office-pic'
-							/>
-						</SwiperSlide>
-
-						<SwiperSlide>
-							<img
-								src='https://img.freepik.com/premium-zdjecie/pokoj-w-pustym-biurze_780608-4633.jpg?size=626&ext=jpg&ga=GA1.1.1922413231.1689935713&semt=sph'
-								alt='office-3'
 								className='office-pic'
 							/>
 						</SwiperSlide>
@@ -71,20 +65,24 @@ const HomePage = () => {
 				</div>
 				<div className='main-info'>
 					<p className='info-box'>
-						W nowej lokalizacji zaprojektowano przesteń spełniającą wymogi najbardziej wymagających pracowników. 
-						Załozeniem było więc zadbanie o najwyzszej jakosci wyposazenie dbające o prawidłową postawę oraz ciszę, a takze zapewnienie prywatności. 
+						In the new location, a space has been designed that meets the
+						requirements of the most demanding employees. The assumption was
+						therefore to ensure the highest quality equipment ensuring correct
+						posture and silence, as well as ensuring privacy.
 					</p>
 				</div>
 			</div>
 			<div className='section-content'>
 				<div className='box1 home-box-spec'>
 					<p className='size'>Departments</p>
-					<p>Development</p>
-					<p>Legal & Compliance</p>
-					<p>Operations</p>
-					<p>Human Resources</p>
-					<p>Finance</p>
-					<p>Marketing & PR</p>
+					<ul className='departments-list'>
+						<li>Development</li>
+						<li>Legal & Compliance</li>
+						<li>Operations</li>
+						<li>Human Resources</li>
+						<li>Finance</li>
+						<li>Marketing & PR</li>
+					</ul>
 				</div>
 				<div className='box2 home-box-spec color'>
 					<div
@@ -97,11 +95,12 @@ const HomePage = () => {
 							src='https://cdn.pixabay.com/photo/2016/03/05/18/54/animal-1238228_1280.jpg'></img>
 						<input
 							onFocus={() => setIsInputFocus(true)}
-							onBlur={() => setIsInputFocus(false)}
+							onBlur={() => setIsInputFocus(false)} // odwrotnosc onFocusa
 							className='input-search' // ZMIENIC TU
-							placeholder='Podziel się z nami swoją opinią'
+							placeholder='Tell us your opinion'
+							value={opinion}  // wartosc inputa i wartosc stanu opinion beda ze soba zsynchronizowane (do tego potrzeba value ionChange), jak zmienia sie wartosc inputa to zmienia sie stan i na odwrot
 							onChange={e => {
-								setOpinion(e.target.value);
+								setOpinion(e.target.value); // na wpisanie czegos ustaw wartosc na wartosc wpisane 
 							}}></input>
 						<button
 							className='btn-send'
@@ -112,7 +111,7 @@ const HomePage = () => {
 					</div>
 					<div className='opinion-box home-box-spec'>
 						<div className='opinion-post'>
-							{opinions.map(opinion => (
+							{opinions.map(opinion => ( // wyswietla tablice htmlow
 								<>
 									<div className='ramka1'>
 										<img
@@ -128,64 +127,78 @@ const HomePage = () => {
 				</div>
 				<div className='box3 home-box-spec'>
 					<p className='size'>Company tools</p>
-					<tr className='mm0'>
-						<th className='mm1'>
-							<a href='https://www.google.pl/'>
+					<ul className='tools-list'>
+						<li className='tools-item'>
+							<a
+								href='https://www.google.pl/?client=safari'
+								className='link-tools'>
 								<img
+									className='pic-tools'
 									src='https://images.sftcdn.net/images/t_app-icon-m/p/a4ff16fe-96d1-11e6-a92a-00163ec9f5fa/3049944431/google-drive-icon.png'
-									alt='google drive'
-									className='pic'
 								/>
+								Google Dive
 							</a>
-						</th>
-						<th className='mm2'>
-							<a href='https://www.google.pl/'>Google Drive</a>
-						</th>
-					</tr>
-					<tr className='mm0'>
-						<th className='mm1'>
-							<a href='https://www.atlassian.com/pl/software/jira'>
-								<img
-									src='https://static-00.iconduck.com/assets.00/jira-icon-512x512-z7na7dot.png'
-									alt='jira'
-									className='pic'
-								/>
-							</a>
-						</th>
-						<th className='mm2'>
-							<a href='https://www.google.pl/'>Jira</a>
-						</th>
-					</tr>
+						</li>
 
-					<tr className='mm0'>
-						<th className='mm1'>
-							<a href='https://www.postman.com'>
+						<li className='tools-item'>
+							<a
+								href='https://www.google.pl/?client=safari'
+								className='link-tools'>
 								<img
-									src='https://yt3.googleusercontent.com/X-rhKMndFm9hT9wIaJns1StBfGbFdLTkAROwm4UZ3n9ucrBky5CFIeeZhSszFXBgQjItzCD0SA=s900-c-k-c0x00ffffff-no-rj'
-									alt='postman'
-									className='pic'
+									className='pic-tools'
+									src='https://w7.pngwing.com/pngs/684/413/png-transparent-figma-logo-thumbnail-tech-companies-thumbnail.png'
 								/>
+								Figma
 							</a>
-						</th>
-						<th className='mm2'>
-							<a href='https://www.google.pl/'>Postman</a>
-						</th>
-					</tr>
+						</li>
 
-					<tr className='mm0'>
-						<th className='mm1'>
-							<a href='www.google.com'>
+						<li className='tools-item'>
+							<a
+								href='https://www.google.pl/?client=safari'
+								className='link-tools'>
 								<img
+									className='pic-tools'
 									src='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Slack_icon_2019.svg/2048px-Slack_icon_2019.svg.png'
-									alt='slack'
-									className='pic'
 								/>
+								Slack
 							</a>
-						</th>
-						<th className='mm2'>
-							<a href='https://www.google.pl/'>Slack</a>
-						</th>
-					</tr>
+						</li>
+
+						<li className='tools-item'>
+							<a
+								href='https://www.google.pl/?client=safari'
+								className='link-tools'>
+								<img
+									className='pic-tools'
+									src='https://static-00.iconduck.com/assets.00/jira-icon-512x512-z7na7dot.png'
+								/>
+								Jira
+							</a>
+						</li>
+
+						<li className='tools-item'>
+							<a
+								href='https://www.google.pl/?client=safari'
+								className='link-tools'>
+								<img
+									className='pic-tools'
+									src='https://yt3.googleusercontent.com/X-rhKMndFm9hT9wIaJns1StBfGbFdLTkAROwm4UZ3n9ucrBky5CFIeeZhSszFXBgQjItzCD0SA=s900-c-k-c0x00ffffff-no-rj'
+								/>
+								Postman
+							</a>
+						</li>
+						<li className='tools-item'>
+							<a
+								href='https://www.google.pl/?client=safari'
+								className='link-tools'>
+								<img
+									className='pic-tools'
+									src='https://upload.wikimedia.org/wikipedia/commons/c/c2/GitHub_Invertocat_Logo.svg'
+								/>
+								GitHub
+							</a>
+						</li>
+					</ul>
 				</div>
 			</div>
 		</div>

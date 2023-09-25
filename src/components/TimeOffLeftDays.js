@@ -3,9 +3,9 @@ import { faPlaneUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { Context } from "../store/ContextProvider";
-import { countTimeoffDays } from "../utlis/weekends";
+import { calculateDaysByType, countTimeoffDays } from "../utlis/days";
 
-const TimeOffLeftDays = () => {
+const TimeOffLeftDays = () => { // komponent
   const { timeOffs } = useContext(Context);
   function getDaysBetweenDates(date1, date2) {
     const oneDay = 24 * 60 * 60 * 1000; // Number of milliseconds in a day
@@ -24,64 +24,64 @@ const TimeOffLeftDays = () => {
     return diffDays;
   }
 
-  function calculateDaysByType(timeOffs, timeOffType) {
-    return (
-      // timeOffs // tablica obiektow TimeOff
-      // bierzemy tylko wiersze ktore sa vacation  timeOffType === "Vacation"
-      // odejmujemmy start date od end date
-      // uzycie reduce, ktory sumuje
-      // number
+  // function calculateDaysByType(timeOffs, timeOffType) {
+  //   return (
+  //     // timeOffs // tablica obiektow TimeOff
+  //     // bierzemy tylko wiersze ktore sa vacation  timeOffType === "Vacation"
+  //     // odejmujemmy start date od end date
+  //     // uzycie reduce, ktory sumuje
+  //     // number
 
-      //[
-      // {
-      //   "id":1,
-      //   "timeOffType":"OccasionalLeave",
-      //   "startDate":"2023-02-02",
-      //   "endDate":"2023-02-03",
-      //   "status":"Approved"
-      // },
-      // {
-      //   "id":2,
-      //   "timeOffType":"Vacation",
-      //   "startDate":"2023-04-05",
-      //   "endDate":"2023-04-07",
-      //   "status":"Approved"
-      // },
-      // {
-      //   "id":3,
-      //   "timeOffType":"Vacation",
-      //   "startDate":"2023-06-11",
-      //   "endDate":"2023-06-18",
-      //   "status":"Requested"
-      // }
-      // ]
-      timeOffs
-        .filter((timeOff) => timeOff.timeOffType === timeOffType)
-        //[
-        // {
-        //   "id":2,
-        //   "timeOffType":"Vacation",
-        //   "startDate":"2023-04-05",
-        //   "endDate":"2023-04-07",
-        //   "status":"Approved"
-        // },
-        // {
-        //   "id":3,
-        //   "timeOffType":"Vacation",
-        //   "startDate":"2023-06-11",
-        //   "endDate":"2023-06-18",
-        //   "status":"Requested"
-        // }
-        // ]
-        .map((timeOff) => countTimeoffDays(timeOff.startDate, timeOff.endDate))
-        //[
-        //  2,
-        //  7
-        //]
-        // function      B[].reduce(f: (A, B) => A, initalAccumulator: A): A
-        .reduce((a, b) => a + b, 0)
-    );
-  }
+  //     //[
+  //     // {
+  //     //   "id":1,
+  //     //   "timeOffType":"OccasionalLeave",
+  //     //   "startDate":"2023-02-02",
+  //     //   "endDate":"2023-02-03",
+  //     //   "status":"Approved"
+  //     // },
+  //     // {
+  //     //   "id":2,
+  //     //   "timeOffType":"Vacation",
+  //     //   "startDate":"2023-04-05",
+  //     //   "endDate":"2023-04-07",
+  //     //   "status":"Approved"
+  //     // },
+  //     // {
+  //     //   "id":3,
+  //     //   "timeOffType":"Vacation",
+  //     //   "startDate":"2023-06-11",
+  //     //   "endDate":"2023-06-18",
+  //     //   "status":"Requested"
+  //     // }
+  //     // ]
+  //     timeOffs
+  //       .filter((timeOff) => timeOff.timeOffType === timeOffType)
+  //       //[
+  //       // {
+  //       //   "id":2,
+  //       //   "timeOffType":"Vacation",
+  //       //   "startDate":"2023-04-05",
+  //       //   "endDate":"2023-04-07",
+  //       //   "status":"Approved"
+  //       // },
+  //       // {
+  //       //   "id":3,
+  //       //   "timeOffType":"Vacation",
+  //       //   "startDate":"2023-06-11",
+  //       //   "endDate":"2023-06-18",
+  //       //   "status":"Requested"
+  //       // }
+  //       // ]
+  //       .map((timeOff) => countTimeoffDays(timeOff.startDate, timeOff.endDate))
+  //       //[
+  //       //  2,
+  //       //  7
+  //       //]
+  //       // function      B[].reduce(f: (A, B) => A, initalAccumulator: A): A
+  //       .reduce((a, b) => a + b, 0)
+  //   );
+  // }
 
   return (
     <div className="right-side box-spec">
@@ -101,7 +101,7 @@ const TimeOffLeftDays = () => {
               </td>
               <td>
                 <div className="th-center">
-                  {calculateDaysByType(timeOffs, "Vacation")}/27
+                  {calculateDaysByType(timeOffs, "Vacation")}/26
                 </div>
               </td>
             </tr>

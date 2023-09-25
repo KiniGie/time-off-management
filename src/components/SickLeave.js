@@ -1,93 +1,117 @@
 import React, { useContext, useRef, useState } from "react";
 import { Context } from "../store/ContextProvider";
-import { checkIsWeekend } from "../utlis/weekends";
+import { checkIsWeekend } from "../utlis/days";
+import { apiUrl } from "../utlis/api";
+
+const errorsMulti = {
+	wrongDates: "Nie wybrano dat",
+	notEndDate: "Wybierz datę końcową",
+	startDateFirst: "Wybierz najpierw datę początkową",
+};
 
 const SickLeave = () => {
-  const { setTimeOffs } = useContext(Context);
+	const { setTimeOffs } = useContext(Context);
 
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+	const [startDate, setStartDate] = useState("");
+	const [endDate, setEndDate] = useState("");
 
-  // const attachmentInput = useRef(null);
+	const [isError, setIsError] = useState(false);
+	const [error, setError] = useState("");
 
-  const submitTimeOff = () => {
-    if (
-      !startDate ||
-      !endDate
-      // || !attachmentInput.current.value
-    )
-      return;
+	// const attachmentInput = useRef(null);
 
-    console.log("przeszlo");
+	const handleSubmit = () => {
+		//sprawdzenie czy data została wybrana, jeśli nie to wykona się funkcja w if'ie czyli return(przerwanie działania funkcji handleSubmit)
+		if (!startDate && !endDate) {
+			setError(errorsMulti.wrongDates);
+			setIsError(true);
+			return;
+		} else if (!startDate) {
+			setError(errorsMulti.startDateFirst);
+			setIsError(true);
+			return;
+		} else if (!endDate) {
+			setError(errorsMulti.notEndDate);
+			setIsError(true);
+			return;
+		}
+		setIsError(false);
 
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        timeOffType: "SickLeave",
-        startDate,
-        endDate,
-        status: "Requested",
-      }),
-    };
-    fetch(
-      "https://9b75tgf537.execute-api.eu-central-1.amazonaws.com/timeoff",
-      requestOptions
-    )
-      .then((response) => response.json())
-      .then((newTimeOff) => setTimeOffs((prev) => [...prev, newTimeOff]));
-  };
+		const requestOptions = {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({
+				timeOffType: "SickLeave",
+				startDate,
+				endDate,
+				status: "Requested",
+			}),
+		};
+		fetch(`${apiUrl}/timeoff`, requestOptions)
+			.then(response => response.json()) // data to wynik response.json()
+			.then(newTimeOff => {
+				setTimeOffs(prev => [newTimeOff, ...prev]);
+				setStartDate("");
+				setEndDate("");
+			});
+	};
 
-  return (
-    <div>
-      <div className="dates font">
-        <input
-          value={startDate}
-          onChange={(e) => {
-            if (checkIsWeekend(e.target.value)) {
-              // alert("Nie można wybrać daty weekendowej");
-              return;
-            }
-            setStartDate(e.target.value);
-          }}
-          className="start-date"
-          type="date"
-        />
-        <input
-          value={endDate}
-          onChange={(e) => {
-            if (checkIsWeekend(e.target.value)) {
-              // alert("Nie można wybrać daty weekendowej");
-              return;
-            }
-            setEndDate(e.target.value);
-          }}
-          className="end-date"
-          type="date"
-          min={startDate}
-        />
-      </div>
-      <div className="total-time-off label-text">
-        <p className="paragraph">This doesn't include weekends</p>
-      </div>
-      <input className="reason font" placeholder="Reason (optional)" />
-      <div className="div-spec">
-        <label className="label-text file-text">Attach file (optional)</label>
-        <input
-          //ref={attachmentInput}
-          className="file-box"
-          type="file"
-          id="myFile"
-          name="filename"
-        />
-      </div>
-      <div className="btn-box">
-        <button onClick={submitTimeOff} className="btn-request font">
-          Submit request
-        </button>
-      </div>
-    </div>
-  );
+	return (
+		<div>
+			<div className='dates font'>
+				<input
+					onClick={e => e.target.showPicker()}
+					value={startDate}
+					onChange={e => {
+						if (checkIsWeekend(e.target.value)) {
+							// alert("Nie można wybrać daty weekendowej");
+							return;
+						}
+						setStartDate(e.target.value);
+					}}
+					className='start-date'
+					type='date'
+					min={new Date().toISOString().split("T")[0]}
+				/>
+				<input
+					onClick={e => e.target.showPicker()}
+					value={endDate}
+					onChange={e => {
+						if (checkIsWeekend(e.target.value)) {
+							// alert("Nie można wybrać daty weekendowej");
+							return;
+						}
+						setEndDate(e.target.value);
+					}}
+					className='end-date'
+					type='date'
+					min={startDate}
+				/>
+				{isError && <div className='error-box'>{error}</div>}
+			</div>
+			<div className='total-time-off label-text'>
+				<p className='paragraph'>This doesn't include weekends</p>
+			</div>
+			<input className='reason font' placeholder='Reason (optional)' />
+			<div className='div-spec'>
+				<label className='label-text file-text'>Attach file (optional)</label>
+				<input
+					className='file-box'
+					type='file'
+					id='myFile'
+					name='filename'
+				/>
+			</div>
+			<div className='btn-box'>
+				<button
+					type='button'
+					onClick={handleSubmit}
+					className='btn-request font'>
+					Submit request
+				</button>
+			</div>
+		</div>
+	);
 };
 
 export default SickLeave;

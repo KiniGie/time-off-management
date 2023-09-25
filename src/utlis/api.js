@@ -1,0 +1,1 @@
+export const apiUrl = "https://9b75tgf537.execute-api.eu-central-1.amazonaws.com"

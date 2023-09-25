@@ -1,25 +1,35 @@
 import React, { createContext, useState } from "react";
+import { apiUrl } from "../utlis/api";
+import { calculateDaysByType } from "../utlis/days";
 
 export const Context = createContext();
 
 const ContextProvider = ({ children }) => {
+  const fullTimeOffs = 26;
   const [isLogged, setIsLogged] = useState(true);
-  const [role, setRole] = useState("admin");
+  const [isLoading, setIsLoading] = useState(false);
+  const [role, setRole] = useState("admin"); // admin to wartosc poczatkowa, setRole ja zmienia
   const [error, setError] = useState("");
   const [timeOffs, setTimeOffs] = useState([]);
+  const [leftVacationDays, setLeftVacationDays] = useState(fullTimeOffs); //  typ number
 
   const fetchTimeOffs = () => {
-    fetch("https://9b75tgf537.execute-api.eu-central-1.amazonaws.com/timeoff")
-      .then((res) => res.json()) // zrob dane z jsona zawartego w response, po odebraniu (czyli PRZY GET) z backendu zamieniamy stringi w obiekty 
+    setIsLoading(true);
+    fetch(`${apiUrl}/timeoff`)
+      .then((res) => res.json()) // zrob dane z jsona zawartego w response, po odebraniu (czyli PRZY GET) z backendu zamieniamy stringi w obiekty
       .then((json) => {
-        setTimeOffs(json); /* setTimeOffs to funkcja () */
+        setTimeOffs(json); /* setTimeOffs to funkcja () przyjmujaca jako argument tablice timeOffow */
+        setLeftVacationDays(
+          fullTimeOffs - calculateDaysByType(json, "Vacation")
+        );
+        setIsLoading(false);
       });
   };
-  // PRZY PATCHU przed wyslaniem zamieniamy obiekty w stringi
   return (
     <Context.Provider
       value={{
         isLogged,
+        isLoading,
         setIsLogged,
         error,
         setError,
@@ -28,6 +38,7 @@ const ContextProvider = ({ children }) => {
         fetchTimeOffs,
         timeOffs,
         setTimeOffs,
+        leftVacationDays,
       }}
     >
       {children}

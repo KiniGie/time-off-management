@@ -6,6 +6,7 @@ import {
   faCircleXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { apiUrl } from "../utlis/api";
 
 const TimeOff /* komponent reactowy! */ = ({
   id,
@@ -17,64 +18,87 @@ const TimeOff /* komponent reactowy! */ = ({
   const { role, fetchTimeOffs } = useContext(Context);
 
   const handleChangeStatus = async (statusToSet) => {
-    if (statusToSet.toLowerCase() === status.toLowerCase()) return; // jesli warunek jest spelniony to nie robimy nic, jesli jest declined i klikam declined to nie zrobi sie nic 
-
+    if (statusToSet.toLowerCase() === status.toLowerCase()) return; // jesli warunek jest spelniony to nie robimy nic, jesli jest declined i klikam declined to nie zrobi sie nic
+/* 
     const a = {
       b: "b",
       c: 123,
-    }
+    };
 
-    const b = '{"b": "b", "c": 123}'
-
-    const requestOptions = { // klamerka wasata- > blok kodu, obiekt, wstawienie kodu js w html, to jest obiekt
+    const b = '{"b": "b", "c": 123}';
+ */
+    const requestOptions = {
+      // klamerka wasata- > blok kodu, obiekt, wstawienie kodu js w html, to jest obiekt
       method: "PATCH", // put w niektórych API  pozwala tworzyć zasoby
       headers: { "Content-Type": "application/json" }, //  headery zaweiraja dodatkowe informacje takie jak typy, wielkosci etc.
-      body: JSON.stringify({ // body to kontent, mieso / BIERZE DANE JAVASCRIPTOWE I ZAMIENIA W STRINGA, zamienia wszystko w string, obiekt takze
+      body: JSON.stringify({
+        // body to kontent, mieso / BIERZE DANE JAVASCRIPTOWE I ZAMIENIA W STRINGA, zamienia wszystko w string, obiekt takze
         status: statusToSet,
       }),
-    }
+    };
 
-    const response = await fetch(   //fetch robi request i czeka na response
-      `${process.env.REACT_APP_API_URL}/${id}`, // ` to string z interpolacja tzn. // jak klikam na check mark to wysylam do api request PATCH z prosba o zmiane statusu na approved dotyczaca timeoffa id
+    const response = await fetch(
+      //fetch robi request i czeka na response
+      `${apiUrl}/timeoff/${id}`, // ` to string z interpolacja tzn. // jak klikam na check mark to wysylam do api request PATCH z prosba o zmiane statusu na approved dotyczaca timeoffa id
       requestOptions
-    )
+    );
     if (response.status === 200) {
-      fetchTimeOffs();  // pobiera wszystkie timeoffy
+      fetchTimeOffs(); // pobiera wszystkie timeoffy
     }
   };
 
   return (
-    <tr>
-      <td className="td-timeOff">{formatTimeOffs(timeOffType)}</td>
+    <div className="timeOff-container">
       {/* {} wstawienie kodu js do html */}
-      <td className="td-timeOff">{startDate}</td>
-      <td className="td-timeOff">{endDate}</td>
-      <td className="td-timeOff">{status}</td>
+      <div className="ttt">
+      <p className="d">From</p>
+      <p className="d2">to</p>
+      </div>
+      <div className="timeofff">
+      <div className="td-timeOff1">{startDate}</div>
+      <div className="d2">{endDate}</div>
+      </div>
+      <div className="tff">
+      <div className="td-timeOff">{formatTimeOffs(timeOffType)}</div>
+      <div className="td-timeOff3">{status}
       {role === "admin" ? (
-        <td className="icons-box">
-          <button 
-            onClick={() => handleChangeStatus("Approved")}
-            className="btn-action btn-accept"
-            style={{border:"none", cursor:"pointer"}}
-          >
-            <FontAwesomeIcon
-              icon={faCircleCheck}
-              style={{ color: "#2eba2c", height: "20px" }}
-            />
-          </button>
-          <button
-            onClick={() => handleChangeStatus("Declined")}
-            className="btn-action btn-declined"
-            style={{border:"none", cursor:"pointer"}}
-          >
-            <FontAwesomeIcon
-              icon={faCircleXmark}
-              style={{ color: "#e7082a", height: "20px"}}
-            />
-          </button>
-        </td>
+        <div className="icons-box">
+          <div className="box-btns">
+            <button
+              onClick={() => handleChangeStatus("Approved")}
+              className="btn-action btn-accept"
+              style={{
+                border: "none",
+                cursor: "pointer",
+                backgroundColor: "transparent",
+              }}
+            >
+              <FontAwesomeIcon
+                icon={faCircleCheck}
+                style={{ color: "rgb(158, 83, 229)", height: "20px" }}
+              />
+            </button>
+            <button
+              onClick={() => handleChangeStatus("Declined")}
+              className="btn-action btn-declined"
+              style={{
+                border: "none",
+                cursor: "pointer",
+                backgroundColor: "transparent",
+              }}
+            >
+              <FontAwesomeIcon
+                icon={faCircleXmark}
+                style={{ color: "rgb(158, 83, 229)", height: "20px" }}
+              />
+            </button>
+          </div>
+        </div>
       ) : null}
-    </tr>
+      </div>
+      </div>
+      
+    </div>
   );
 };
 
