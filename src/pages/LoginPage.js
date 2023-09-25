@@ -18,16 +18,16 @@ const loginData = [
 	},
 ];
 
-const LoginPage = () => { // LoginPage jest komponentem (komponent zawsze ma f.strzalkowa z wielkiej litery zwracajaca kod html)
-	const { error, setIsLogged, setError, setRole } = useContext(Context); //po prawej obiekt, po lewej destrukturyzacja obiektu, czyli przypisanie poszczegolnych pol obiektu do zmiennych lokalnych
+const LoginPage = () => {
+	const { error, setIsLogged, setError, setRole } = useContext(Context);
 	const navigate = useNavigate();
 
-	const [username, setUsername] = useState(""); // stwórz stan
+	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 
 	const checkLogin = e => {
-		e.preventDefault(); // przy sumbit buttonu zazwyczaj robi sie e.preventDefault(), zeby przeglarka nie probowala wyslac formularza, tylko wykonala ponizsza logike
-		if (!username || !password) return; // jesli jest pusty string to jest false, ! neguje boolean i wymusza konwersje ze string do boolean/ / jezeli username lub haslo sa puste to przerywamy procedure sprawdzania loginu
+		e.preventDefault();
+		if (!username || !password) return;
 
 		const foundUser = loginData.find(user => user.username === username);
 
@@ -43,7 +43,7 @@ const LoginPage = () => { // LoginPage jest komponentem (komponent zawsze ma f.s
 				setError("Wrong password");
 			}
 		}
-	}; // ta funkcja nic nie zwraca bo nie ma returna, po ktorym cos zostaje zwrocone
+	};
 
 	return (
 		<>
@@ -71,7 +71,7 @@ const LoginPage = () => { // LoginPage jest komponentem (komponent zawsze ma f.s
 							name='login'
 							id='login'
 							placeholder='login'
-							onChange={e => setUsername(e.target.value)} // ustawiaczka state'a na aktualna wartosc inputa
+							onChange={e => setUsername(e.target.value)}
 						/>
 						<label htmlFor='password'></label>
 						<input
@@ -91,8 +91,7 @@ const LoginPage = () => { // LoginPage jest komponentem (komponent zawsze ma f.s
 					</form>
 				</div>
 			</div>
-
-			{error && <p>{error}</p>} {/* wyswietlanie errorow ustawianych wczesniej przez setError, jesli error jest pustym stringiem to nic nie jest juz wyswietlane, a jest jest niepusty to wyswietl error */}
+			{error && <p>{error}</p>}{" "}
 		</>
 	);
 };

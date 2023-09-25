@@ -10,7 +10,6 @@ import "swiper/css/pagination";
 import "./HomePage.css";
 
 const HomePage = () => {
-	// homepage jest komponentem i f.strzalkowa
 	const [opinions, setOpinions] = useState([]);
 	const [opinion, setOpinion] = useState("");
 	const [isInputFocus, setIsInputFocus] = useState(false);
@@ -21,20 +20,18 @@ const HomePage = () => {
 		if (!isLogged) {
 			navigate("/login");
 		}
-	}, []); //useEffect wykonuje sie na pcozatku i w momencie zmiany zaleznosci podanych w []
+	}, []);
 
 	if (!isLogged) {
-		return null; // null zeby strona nie mignela
+		return null;
 	}
 
 	const handleAddOpinion = () => {
-		//f.strzalkowa, zero argumentowa
 		if (!opinion) {
 			return;
 		}
 
 		const newOpinion = {
-			/* id: Math.floor(Math.random() * 1000), */
 			person: "Jan Skoczny",
 			text: opinion,
 		};
@@ -95,12 +92,12 @@ const HomePage = () => {
 							src='https://cdn.pixabay.com/photo/2016/03/05/18/54/animal-1238228_1280.jpg'></img>
 						<input
 							onFocus={() => setIsInputFocus(true)}
-							onBlur={() => setIsInputFocus(false)} // odwrotnosc onFocusa
-							className='input-search' // ZMIENIC TU
+							onBlur={() => setIsInputFocus(false)}
+							className='input-search'
 							placeholder='Tell us your opinion'
-							value={opinion}  // wartosc inputa i wartosc stanu opinion beda ze soba zsynchronizowane (do tego potrzeba value ionChange), jak zmienia sie wartosc inputa to zmienia sie stan i na odwrot
+							value={opinion}
 							onChange={e => {
-								setOpinion(e.target.value); // na wpisanie czegos ustaw wartosc na wartosc wpisane 
+								setOpinion(e.target.value);
 							}}></input>
 						<button
 							className='btn-send'
@@ -111,7 +108,7 @@ const HomePage = () => {
 					</div>
 					<div className='opinion-box home-box-spec'>
 						<div className='opinion-post'>
-							{opinions.map(opinion => ( // wyswietla tablice htmlow
+							{opinions.map(opinion => (
 								<>
 									<div className='ramka1'>
 										<img

@@ -17,7 +17,7 @@ const router = createBrowserRouter(
 				},
 				{
 					path: "panel",
-					element: <PanelPage /> /* TODO: POZMIENIAC NAZWY! */,
+					element: <PanelPage />,
 				},
 			],
 		},

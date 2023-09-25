@@ -18,10 +18,7 @@ const SickLeave = () => {
 	const [isError, setIsError] = useState(false);
 	const [error, setError] = useState("");
 
-	// const attachmentInput = useRef(null);
-
 	const handleSubmit = () => {
-		//sprawdzenie czy data została wybrana, jeśli nie to wykona się funkcja w if'ie czyli return(przerwanie działania funkcji handleSubmit)
 		if (!startDate && !endDate) {
 			setError(errorsMulti.wrongDates);
 			setIsError(true);
@@ -48,7 +45,7 @@ const SickLeave = () => {
 			}),
 		};
 		fetch(`${apiUrl}/timeoff`, requestOptions)
-			.then(response => response.json()) // data to wynik response.json()
+			.then(response => response.json())
 			.then(newTimeOff => {
 				setTimeOffs(prev => [newTimeOff, ...prev]);
 				setStartDate("");
@@ -64,7 +61,6 @@ const SickLeave = () => {
 					value={startDate}
 					onChange={e => {
 						if (checkIsWeekend(e.target.value)) {
-							// alert("Nie można wybrać daty weekendowej");
 							return;
 						}
 						setStartDate(e.target.value);
@@ -78,7 +74,6 @@ const SickLeave = () => {
 					value={endDate}
 					onChange={e => {
 						if (checkIsWeekend(e.target.value)) {
-							// alert("Nie można wybrać daty weekendowej");
 							return;
 						}
 						setEndDate(e.target.value);
@@ -95,12 +90,7 @@ const SickLeave = () => {
 			<input className='reason font' placeholder='Reason (optional)' />
 			<div className='div-spec'>
 				<label className='label-text file-text'>Attach file (optional)</label>
-				<input
-					className='file-box'
-					type='file'
-					id='myFile'
-					name='filename'
-				/>
+				<input className='file-box' type='file' id='myFile' name='filename' />
 			</div>
 			<div className='btn-box'>
 				<button
