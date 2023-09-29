@@ -48,6 +48,7 @@ const HomePage = () => {
 						<SwiperSlide>
 							<img
 								src='https://img.freepik.com/premium-zdjecie/fioletowa-inspiracja-wnetrza-przestrzeni-roboczej_828688-1950.jpg?size=626&ext=jpg&ga=GA1.1.1922413231.1689935713&semt=ais'
+								alt='office-1'
 								className='office-pic'
 							/>
 						</SwiperSlide>
@@ -127,7 +128,7 @@ const HomePage = () => {
 					<ul className='tools-list'>
 						<li className='tools-item'>
 							<a
-								href='https://www.google.pl/?client=safari'
+								href='https://drive.google.com/drive/my-drive'
 								className='link-tools'>
 								<img
 									className='pic-tools'
@@ -139,7 +140,7 @@ const HomePage = () => {
 
 						<li className='tools-item'>
 							<a
-								href='https://www.google.pl/?client=safari'
+								href='https://www.figma.com'
 								className='link-tools'>
 								<img
 									className='pic-tools'
@@ -151,7 +152,7 @@ const HomePage = () => {
 
 						<li className='tools-item'>
 							<a
-								href='https://www.google.pl/?client=safari'
+								href='https://slack.com'
 								className='link-tools'>
 								<img
 									className='pic-tools'
@@ -163,7 +164,7 @@ const HomePage = () => {
 
 						<li className='tools-item'>
 							<a
-								href='https://www.google.pl/?client=safari'
+								href='https://www.atlassian.com/software/jira?&aceid=&adposition=&adgroup=151255109963&campaign=20389338852&creative=666706086655&device=c&keyword=jira&matchtype=e&network=g&placement=&ds_kids=p77324634991&ds_e=GOOGLE&ds_eid=700000001558501&ds_e1=GOOGLE&gclid=CjwKCAjw69moBhBgEiwAUFCx2FVn6oJ7OBEjVjHTLBE4Wv7-0hLgkF5vY9gWji2BQTq5_TGZ2t5MoxoCjosQAvD_BwE&gclsrc=aw.ds'
 								className='link-tools'>
 								<img
 									className='pic-tools'
@@ -175,7 +176,7 @@ const HomePage = () => {
 
 						<li className='tools-item'>
 							<a
-								href='https://www.google.pl/?client=safari'
+								href='https://www.postman.com'
 								className='link-tools'>
 								<img
 									className='pic-tools'
@@ -186,7 +187,7 @@ const HomePage = () => {
 						</li>
 						<li className='tools-item'>
 							<a
-								href='https://www.google.pl/?client=safari'
+								href='https://github.com'
 								className='link-tools'>
 								<img
 									className='pic-tools'

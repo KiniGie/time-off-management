@@ -139,7 +139,7 @@ const Vacation = () => {
               }}
               className="end-date"
               type="date"
-              min={startDate} /
+              min={startDate}
             />
           ) : null}
           {isError && <div className="error-box">{error}</div>}  
