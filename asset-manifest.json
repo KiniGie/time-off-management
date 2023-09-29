@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/time-off-management/static/css/main.00263e19.css",
-    "main.js": "/time-off-management/static/js/main.6ed9621c.js",
+    "main.css": "/time-off-management/static/css/main.72262fbb.css",
+    "main.js": "/time-off-management/static/js/main.9f1d9086.js",
     "index.html": "/time-off-management/index.html",
-    "main.00263e19.css.map": "/time-off-management/static/css/main.00263e19.css.map",
-    "main.6ed9621c.js.map": "/time-off-management/static/js/main.6ed9621c.js.map"
+    "main.72262fbb.css.map": "/time-off-management/static/css/main.72262fbb.css.map",
+    "main.9f1d9086.js.map": "/time-off-management/static/js/main.9f1d9086.js.map"
   },
   "entrypoints": [
-    "static/css/main.00263e19.css",
-    "static/js/main.6ed9621c.js"
+    "static/css/main.72262fbb.css",
+    "static/js/main.9f1d9086.js"
   ]
 }
