@@ -62,12 +62,13 @@ const HomePage = () => {
 					</Swiper>
 				</div>
 				<div className='main-info'>
-					<p className='info-box'>
+					<h1 className="info-title">Office announcement</h1>
+					<h2 className='info-box'>
 						In the new location, a space has been designed that meets the
 						requirements of the most demanding employees. The assumption was
 						therefore to ensure the highest quality equipment ensuring correct
 						posture and silence, as well as ensuring privacy.
-					</p>
+					</h2>
 				</div>
 			</div>
 			<div className='section-content'>
